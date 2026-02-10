@@ -47,6 +47,9 @@ const Header = () => {
               <Link href="/events" passHref>
                 <button className="header-btn">Events</button>
               </Link>
+              <Link href="/sponsors" passHref>
+                <button className="header-btn">Sponsors</button>
+              </Link>
               <a href="https://drive.google.com/drive/folders/1hrFqLIvPOfRXELWysU0PiBVvh8l-INL_?usp=sharing">
                 <button className="header-btn pb-1">Resources</button>
               </a>
@@ -100,6 +103,11 @@ const Header = () => {
             <Link href="/events" passHref>
               <button className="menu-btn" onClick={handleCloseMobileMenu}>
                 Events
+              </button>
+            </Link>
+            <Link href="/sponsors" passHref>
+              <button className="menu-btn" onClick={handleCloseMobileMenu}>
+                Sponsors
               </button>
             </Link>
             <a href="https://drive.google.com/drive/folders/1hrFqLIvPOfRXELWysU0PiBVvh8l-INL_?usp=sharing">
