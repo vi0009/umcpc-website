@@ -1,254 +1,214 @@
-import React from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 
-const sponsors = [
-  {
-    tier: 'Principal Sponsor',
-    items: [
-      {
-        name: 'Sponsor Name',
-        url: 'https://example.com',
-        blurb:
-          'Short one-liner about what they do / why they support the club.',
-      },
-    ],
-  },
-  {
-    tier: 'Gold Sponsors',
-    items: [
-      {
-        name: 'Sponsor Name',
-        url: 'https://example.com',
-        blurb: 'Short one-liner.',
-      },
-      {
-        name: 'Sponsor Name',
-        url: 'https://example.com',
-        blurb: 'Short one-liner.',
-      },
-    ],
-  },
-  {
-    tier: 'Community Partners',
-    items: [
-      {
-        name: 'Sponsor Name',
-        url: 'https://example.com',
-        blurb: 'Short one-liner.',
-      },
-      {
-        name: 'Sponsor Name',
-        url: 'https://example.com',
-        blurb: 'Short one-liner.',
-      },
-      {
-        name: 'Sponsor Name',
-        url: 'https://example.com',
-        blurb: 'Short one-liner.',
-      },
-    ],
-  },
-]
+const useInView = (
+  opts = { threshold: 0.15, rootMargin: '0px 0px -15% 0px' }
+) => {
+  const ref = useRef(null)
+  const [inView, setInView] = useState(false)
 
-function SponsorCard({ name, url, blurb }) {
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const obs = new IntersectionObserver(([entry]) => {
+      setInView(entry.isIntersecting)
+    }, opts)
+
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [opts.threshold, opts.rootMargin])
+
+  return [ref, inView]
+}
+
+export const FadeIn = ({ children, delay = 0 }) => {
+  const [ref, inView] = useInView()
+
   return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noreferrer"
-      style={{
-        textDecoration: 'none',
-        color: 'inherit',
-      }}
+    <div
+      ref={ref}
+      className={`
+        transition-all duration-500 ease-out
+        ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+      `}
+      style={{ transitionDelay: `${delay}ms` }}
     >
-      <div
-        style={{
-          border: '1px solid rgba(11,15,23,0.10)',
-          borderRadius: 18,
-          padding: 18,
-          background: 'rgba(11,15,23,0.02)',
-          boxShadow: '0 10px 30px rgba(11,15,23,0.08)',
-          transition: 'transform 120ms ease, box-shadow 120ms ease',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = 'translateY(-2px)'
-          e.currentTarget.style.boxShadow = '0 16px 40px rgba(11,15,23,0.10)'
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = 'translateY(0px)'
-          e.currentTarget.style.boxShadow = '0 10px 30px rgba(11,15,23,0.08)'
-        }}
-      >
-        <div style={{ fontWeight: 800, letterSpacing: '-0.01em' }}>{name}</div>
-        {blurb && (
-          <div
-            style={{ marginTop: 8, color: 'rgba(11,15,23,0.68)', fontSize: 14 }}
-          >
-            {blurb}
-          </div>
-        )}
-        <div style={{ marginTop: 12, fontSize: 13, fontWeight: 700 }}>
-          Visit website →
-        </div>
-      </div>
-    </a>
+      {children}
+    </div>
   )
 }
 
-export default function SponsorsPage() {
-  return (
-    <div style={{ background: '#fff', color: '#0b0f17', minHeight: '100vh' }}>
-      <div
-        style={{ maxWidth: 1100, margin: '0 auto', padding: '26px 18px 70px' }}
-      >
-        {/* Hero */}
-        <section
-          style={{
-            border: '1px solid rgba(11,15,23,0.10)',
-            borderRadius: 18,
-            overflow: 'hidden',
-            background:
-              'linear-gradient(135deg, rgba(11,15,23,0.06), rgba(11,15,23,0.01))',
-            boxShadow: '0 12px 34px rgba(11,15,23,0.08)',
-          }}
-        >
-          <div style={{ padding: 'clamp(18px, 3vw, 34px)' }}>
-            <div
-              style={{
-                fontSize: 14,
-                color: 'rgba(11,15,23,0.68)',
-                marginBottom: 10,
-              }}
-            >
-              Our supporters
-            </div>
-            <h1
-              style={{
-                margin: 0,
-                fontSize: 'clamp(34px, 5vw, 62px)',
-                lineHeight: 1.02,
-                letterSpacing: '-0.03em',
-              }}
-            >
-              Sponsors
-            </h1>
-            <p
-              style={{
-                marginTop: 14,
-                maxWidth: 720,
-                color: 'rgba(11,15,23,0.68)',
-              }}
-            >
-              Thanks to our sponsors for helping us run events, support
-              students, and build a stronger competitive programming community.
-            </p>
+const img_types = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp', 'svg']
 
-            <div
-              style={{
-                display: 'flex',
-                gap: 12,
-                flexWrap: 'wrap',
-                marginTop: 18,
-              }}
-            >
-              <a
-                href="mailto:team@umcpc.club"
-                className="btn"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '11px 14px',
-                  borderRadius: 12,
-                  border: '1px solid rgba(11,15,23,0.10)',
-                  background: '#fff',
-                  fontWeight: 800,
-                  fontSize: 14,
-                  boxShadow: '0 8px 22px rgba(11,15,23,0.08)',
-                  textDecoration: 'none',
-                  color: 'inherit',
-                }}
-              >
-                Become a sponsor
-              </a>
-              <a
-                href="#tiers"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '11px 14px',
-                  borderRadius: 12,
-                  border: '1px solid rgba(11,15,23,0.10)',
-                  background: 'transparent',
-                  fontWeight: 800,
-                  fontSize: 14,
-                  textDecoration: 'none',
-                  color: 'inherit',
-                }}
-              >
-                View tiers ↓
-              </a>
-            </div>
+const SponsorCard = ({ sponsor, delay = 0 }) => {
+  const [logoSrc, setLogoSrc] = useState(null)
+
+  useEffect(() => {
+    let mounted = true
+
+    const findLogo = async () => {
+      for (const ext of img_types) {
+        const path = `/sponsors/logos/${sponsor.name}.${ext}`
+        try {
+          const res = await fetch(path, { method: 'HEAD' })
+          if (res.ok && mounted) {
+            setLogoSrc(path)
+            return
+          }
+        } catch {}
+      }
+      if (mounted) setLogoSrc(null)
+    }
+
+    findLogo()
+    return () => {
+      mounted = false
+    }
+  }, [sponsor.name])
+
+  const card = (
+    <FadeIn delay={delay}>
+      <div className="relative w-full bg-club-blue-800 rounded-xl shadow-lg overflow-hidden group cursor-pointer transition-transform transform hover:scale-105 hover:shadow-2xl border-2 border-club-blue-100">
+        {logoSrc && (
+          <div className="w-full h-64 bg-white flex items-center justify-center p-6">
+            <img
+              src={logoSrc}
+              alt={sponsor.name}
+              className="max-h-full max-w-full object-contain opacity-90 transition-transform duration-300 group-hover:scale-105"
+            />
           </div>
-        </section>
+        )}
 
-        {/* Sponsor tiers */}
-        <section id="tiers" style={{ marginTop: 26 }}>
-          {sponsors.map((group) => (
-            <div key={group.tier} style={{ marginTop: 22 }}>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'baseline',
-                  justifyContent: 'space-between',
-                  gap: 16,
-                  flexWrap: 'wrap',
-                  marginBottom: 12,
-                }}
-              >
-                <h2
-                  style={{ margin: 0, fontSize: 18, letterSpacing: '-0.01em' }}
-                >
-                  {group.tier}
-                </h2>
-                <div style={{ fontSize: 13, color: 'rgba(11,15,23,0.55)' }}>
-                  {group.items.length} supporter
-                  {group.items.length === 1 ? '' : 's'}
-                </div>
-              </div>
+        <div className="absolute bottom-0 w-full bg-club-blue-800 bg-opacity-90 text-white text-center py-3 text-base sm:text-lg font-bold px-3">
+          <span className="truncate block w-full">{sponsor.name}</span>
+        </div>
 
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-                  gap: 14,
-                }}
-              >
-                {group.items.map((s) => (
-                  <SponsorCard key={s.name} {...s} />
-                ))}
+        <div className="absolute inset-0 bg-club-blue-800 bg-opacity-85 text-white p-4 sm:p-6 flex flex-col opacity-0 transition-opacity duration-300 group-hover:opacity-90">
+          <h2 className="font-bold mb-2 text-lg sm:text-xl lg:text-2xl leading-tight">
+            {sponsor.name}
+          </h2>
+          {sponsor.blurb && (
+            <p className="mb-4 text-sm sm:text-base text-white/90 leading-snug line-clamp-6">
+              {sponsor.blurb}
+            </p>
+          )}
+        </div>
+      </div>
+    </FadeIn>
+  )
+
+  return sponsor.url ? (
+    <a href={sponsor.url} target="_blank" rel="noreferrer" className="block">
+      {card}
+    </a>
+  ) : (
+    card
+  )
+}
+
+const groupByTier = (items) => {
+  const out = {}
+  for (const s of items) {
+    const t = s.tier || 'Sponsors'
+    ;(out[t] ||= []).push(s)
+  }
+  return out
+}
+
+const tierOrder = ['Gold', 'Silver', 'Bronze', 'Community Partner']
+
+const Sponsors = () => {
+  const [sponsors, setSponsors] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const run = async () => {
+      try {
+        const res = await fetch(`/sponsors/sponsors.json`)
+        const data = await res.json()
+        setSponsors(Array.isArray(data) ? data : [])
+      } catch {
+        setSponsors([])
+      } finally {
+        setLoading(false)
+      }
+    }
+    run()
+  }, [])
+
+  const pages = useMemo(() => {
+    const grouped = groupByTier(sponsors)
+    const ordered = tierOrder.filter((t) => grouped[t]?.length)
+    const extra = Object.keys(grouped).filter((t) => !tierOrder.includes(t))
+    return [...ordered, ...extra].map((tier) => ({
+      tier,
+      sponsors: grouped[tier],
+    }))
+  }, [sponsors])
+
+  if (loading) return <p className="mx-10 mt-10">Loading sponsors...</p>
+
+  return (
+    <div className="flex-1 px-10 pb-16">
+      <FadeIn>
+        <h1 className="page-header-font mb-6 h-20 header-underline">Sponsors</h1>
+      </FadeIn>
+
+      <FadeIn delay={80}>
+        <div className="mb-10 bg-club-blue-800 border-2 border-club-blue-100 rounded-xl shadow-lg p-6 text-white max-w-3xl">
+          <p className="text-lg font-semibold mb-2">Our supporters</p>
+          <p className="text-white/80 max-w-3xl mx-auto">
+            Thanks to our sponsors for helping us run events, support students,
+            and grow the competitive programming community.
+          </p>
+          <div className="mt-4">
+            <a
+              href="mailto:team@umcpc.club"
+              className="inline-block bg-white text-club-blue-800 font-bold px-4 py-2 rounded-lg shadow hover:opacity-90 transition"
+            >
+              Become a sponsor
+            </a>
+          </div>
+        </div>
+      </FadeIn>
+
+      {pages.length === 0 && (
+        <p className="text-center text-gray-500">No sponsors yet.</p>
+      )}
+
+      {pages.map((page, tierIdx) => (
+        <div key={page.tier} className="mb-12">
+          <FadeIn delay={tierIdx * 60}>
+            <div className="flex items-end justify-between gap-4 mb-4">
+              <h2 className="text-white text-2xl font-bold">{page.tier}</h2>
+              <div className="text-white/60 text-sm font-semibold">
+                {page.sponsors.length} sponsor
+                {page.sponsors.length === 1 ? '' : 's'}
               </div>
             </div>
-          ))}
-        </section>
+          </FadeIn>
 
-        {/* Footer note */}
-        <footer
-          style={{
-            marginTop: 34,
-            paddingTop: 18,
-            borderTop: '1px solid rgba(11,15,23,0.08)',
-            color: 'rgba(11,15,23,0.68)',
-            fontSize: 13,
-          }}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl">
+            {page.sponsors.map((s, i) => (
+              <div key={s.id || s.name} className="min-w-[280px]">
+                <SponsorCard sponsor={s} delay={i * 60} />
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <div className="pt-6 border-t border-white/10 text-center text-gray-400">
+        Want to sponsor an event or workshop? Email{' '}
+        <a
+          className="font-bold underline underline-offset-4"
+          href="mailto:team@umcpc.club"
         >
-          Want your logo here? Email{' '}
-          <a href="mailto:team@umcpc.club" style={{ fontWeight: 700 }}>
-            team@umcpc.club
-          </a>
-          .
-        </footer>
+          team@umcpc.club
+        </a>
       </div>
     </div>
   )
 }
+
+export default Sponsors

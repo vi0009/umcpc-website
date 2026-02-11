@@ -81,7 +81,7 @@ const Events = () => {
         <div className="grid grid-cols-3 gap-6 mb-10">
           {filterEvents(events, true).map((event) => (
             <EventCard key={event.id} event={event} />
-          ))}
+          )).length === 0 && <p className="w-full bg-club-blue-800 bg-opacity-90 text-white text-center py-3 text-lg font-bold">No upcoming events.</p>}
         </div>
 
         {/* Past Events */}
@@ -91,7 +91,7 @@ const Events = () => {
         <div className="grid grid-cols-3 gap-6 mb-10">
           {filterEvents(events, false).map((event) => (
             <EventCard key={event.id} event={event} />
-          ))}
+          )).length === 0 && <p className="w-full bg-club-blue-800 bg-opacity-90 text-white text-center py-3 text-lg font-bold">No past events.</p>}
         </div>
       </div>
     </div>
