@@ -151,7 +151,9 @@ const Sponsors = () => {
   return (
     <div className="flex-1 px-10 pb-16">
       <FadeIn>
-        <h1 className="page-header-font mb-6 h-20 header-underline">Sponsors</h1>
+        <h1 className="page-header-font mb-6 h-20 header-underline">
+          Sponsors
+        </h1>
       </FadeIn>
 
       <FadeIn delay={80}>
@@ -161,14 +163,6 @@ const Sponsors = () => {
             Thanks to our sponsors for helping us run events, support students
             and grow the competitive programming community.
           </p>
-          <div className="mt-4">
-            <a
-              href="mailto:team@umcpc.club"
-              className="inline-block bg-white text-club-blue-800 font-bold px-4 py-2 rounded-lg shadow hover:opacity-90 transition"
-            >
-              Become a sponsor
-            </a>
-          </div>
         </div>
       </FadeIn>
 
@@ -202,9 +196,9 @@ const Sponsors = () => {
         Want to sponsor an event or workshop? Email{' '}
         <a
           className="font-bold underline underline-offset-4"
-          href="mailto:team@umcpc.club"
+          href="mailto:unimelbcpc@gmail.com"
         >
-          team@umcpc.club
+          unimelbcpc@gmail.com
         </a>
       </div>
     </div>
