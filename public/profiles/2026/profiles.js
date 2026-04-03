@@ -6,7 +6,7 @@ export const COMMITTEE = {
       id: 1,
       name: 'David Wang',
       title: 'President',
-      img: '/tmp-profile.jpeg',
+      img: '/david.png',
       text: '',
     },
     {
@@ -37,14 +37,14 @@ export const COMMITTEE = {
       id: 1,
       name: 'Edge Wang',
       title: 'Competitions Director',
-      img: '/tmp-profile.jpeg',
+      img: '/edge.png',
       text: '',
     },
     {
       id: 2,
       name: 'Ada Yuan',
       title: 'Design Director',
-      img: '/tmp-profile.jpeg',
+      img: '/ada.jpg',
       text: '',
     },
     {
