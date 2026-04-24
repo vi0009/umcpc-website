@@ -42,30 +42,28 @@ const Resources = () => {
   const [resources, setResources] = useState([])
   const [fadeIn, setFadeIn] = useState(false)
 
-  useEffect(() => {
-   
-    const defaultResources = [
-      {
-        id: 1,
-        title: 'Google Drive',
-        description: 'Past competitions and recommended readings',
-        link: 'https://drive.google.com/drive/folders/1hrFqLIvPOfRXELWysU0PiBVvh8l-INL_',
-        image: '/images/resources/google-drive.jpg'
-      },
-      // Add more resources here later
-      /*
-      {
-        id: 2,
-        title: 'Another Resource',
-        description: '...',
-        link: '...',
-        image: '...'
-      }
-      */
-    ]
+   useEffect(() => {
+    const loadResources = async () => 
+      try {
+        const res = await fetch('/resources/resources.json') 
+        if (!res.ok) throw new Error('Failed to fetch resources')
 
-    setResources(defaultResources)
-    setFadeIn(true)
+        const data = await res.json()
+
+        if (Array.isArray(data)) {
+          setResources(data)
+        } else {
+          setResources([])
+        }
+      } catch (error) {
+        console.error('Error loading resources:', error)
+        setResources([]) 
+      } finally {
+        setFadeIn(true)
+      }
+    }
+
+    loadResources()
   }, [])
 
   return (
