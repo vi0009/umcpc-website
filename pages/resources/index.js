@@ -43,7 +43,7 @@ const Resources = () => {
   const [fadeIn, setFadeIn] = useState(false)
 
    useEffect(() => {
-    const loadResources = async () => 
+    const loadResources = async () => {
       try {
         const res = await fetch('/resources/resources.json') 
         if (!res.ok) throw new Error('Failed to fetch resources')
