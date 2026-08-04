@@ -50,12 +50,9 @@ const Header = () => {
               <Link href="/sponsors" passHref>
                 <button className="header-btn">Sponsors</button>
               </Link>
-              <a href="https://drive.google.com/drive/folders/1hrFqLIvPOfRXELWysU0PiBVvh8l-INL_?usp=sharing">
+              <Link href="/resources" passHref>
                 <button className="header-btn pb-1">Resources</button>
-              </a>
-              <a href="https://aware-somersault-1ad.notion.site/umcpc">
-                <button className="header-btn pb-1">Learning</button>
-              </a>
+              </Link>
             </div>
             <a
               className="rounded-btn ml-4"
