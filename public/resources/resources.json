@@ -4,6 +4,13 @@
     "title": "Google Drive",
     "description": "Past competitions and recommended readings",
     "link": "https://drive.google.com/drive/folders/1hrFqLIvPOfRXELWysU0PiBVvh8l-INL_",
-    "image": "/images/google-drive.jpg"
+    "image": "resources/images/google-drive.png"
+  },
+  {
+    "id": 2,
+    "title": "Notion",
+    "description": "Useful resource library for competitive programming",
+    "link": "https://aware-somersault-1ad.notion.site/umcpc",
+    "image": "resources/images/notion.png"
   }
 ]
