@@ -6,6 +6,7 @@ const filterEvents = (events, upcoming = true) => {
   const now = new Date()
 
   return events.filter((event) => {
+    if (event.enabled === false) return false
     if (!event.date) return false
 
     const eventDate = new Date(event.date)
@@ -98,7 +99,11 @@ const Events = () => {
   const pastEvents = filterEvents(events, false)
 
   return (
-    <div className={`h-screen flex-1 flex overflow-hidden fade-in ${fadeIn ? 'show' : ''}`}>
+    <div
+      className={`h-screen flex-1 flex overflow-hidden fade-in ${
+        fadeIn ? 'show' : ''
+      }`}
+    >
       <div className="flex-1 overflow-y-scroll px-10">
         <h1 className="page-header-font mb-6 h-20 header-underline">
           Upcoming Events
