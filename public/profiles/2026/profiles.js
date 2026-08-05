@@ -51,7 +51,7 @@ export const COMMITTEE = {
       id: 3,
       name: 'Sean Yin',
       title: 'Events Director',
-      img: '/tmp-profile.jpeg',
+      img: '/sean.jpg',
       text: '',
     },
     {
