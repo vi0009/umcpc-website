@@ -5,23 +5,38 @@ const filterEvents = (events, upcoming = true) => {
 
   const now = new Date()
 
+  const parseEventEnd = (dateStr) => {
+    if (!dateStr) return null
+
+    // If Notion returns a date-only string like '2025-03-27', treat it
+    // as the end of that local day so the event is considered "upcoming"
+    // for the whole day.
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+      const [y, m, d] = dateStr.split('-').map(Number)
+      return new Date(y, m - 1, d, 23, 59, 59, 999)
+    }
+
+    const dt = new Date(dateStr)
+    if (isNaN(dt)) return null
+    return dt
+  }
+
   return events.filter((event) => {
-    if (event.enabled === false) return false
     if (!event.date) return false
 
-    const eventDate = new Date(event.date)
-    if (isNaN(eventDate)) return false
+    const eventEnd = parseEventEnd(event.date)
+    if (!eventEnd) return false
 
-    const isPast = eventDate < now
+    const isPast = eventEnd < now
     return upcoming ? !isPast : isPast
   })
 }
 
 const EventCard = ({ event }) => (
-  <div className="relative w-full min-w-[280px] max-w-[380px] flex-1 h-56 sm:h-64 md:h-72 bg-club-blue-800 rounded-xl shadow-lg overflow-hidden group cursor-pointer transition-transform hover:scale-[1.02] hover:shadow-2xl border-2 border-club-blue-100">
+  <div className="relative w-full sm:w-[280px] flex-none h-56 sm:h-64 md:h-72 bg-club-blue-800 rounded-xl shadow-lg overflow-hidden group cursor-pointer transition-transform hover:scale-[1.02] hover:shadow-2xl border-2 border-club-blue-100">
     {event.image && (
       <img
-        src={event.image}
+        src={event.image.startsWith('/') ? event.image : `/${event.image}`}
         alt={event.name}
         className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
       />
@@ -40,7 +55,7 @@ const EventCard = ({ event }) => (
         {event.description}
       </p>
 
-      <div className="flex flex-col gap-1 text-xs sm:text-sm font-medium">
+      <div className="flex flex-col gap-1 text-xs sm:text-sm font-small">
         <p>🗓️ {event.date ? new Date(event.date).toDateString() : 'TBA'}</p>
         <p>⏰ {event.time || 'TBA'}</p>
         <p>📍 {event.location || 'TBA'}</p>
@@ -99,12 +114,8 @@ const Events = () => {
   const pastEvents = filterEvents(events, false)
 
   return (
-    <div
-      className={`h-screen flex-1 flex overflow-hidden fade-in ${
-        fadeIn ? 'show' : ''
-      }`}
-    >
-      <div className="flex-1 overflow-y-scroll px-10">
+    <div className={`flex-1 flex min-h-screen fade-in ${fadeIn ? 'show' : ''}`}>
+      <div className="flex-1 h-full overflow-y-auto px-10">
         <h1 className="page-header-font mb-6 h-20 header-underline">
           Upcoming Events
         </h1>

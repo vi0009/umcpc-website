@@ -20,10 +20,19 @@
   {
     "image": "events/images/trivia-night.png",
     "name": "🔥 Trivia Night 🔥",
-    "description": "Test your knowledge with our fun trivia night\n Grab free tickets in our instagram bio",
+    "description": "Test your knowledge with our fun trivia night\nGrab free tickets in our instagram bio",
     "date": "2026-08-07",
     "time": "17:00-20:00",
     "location": "Alan Gilbert Room G18",
+    "enabled": true
+  },
+  {
+    "image": "",
+    "name": "🔥 $6 Competition 🔥",
+    "description": "Win money by solving any question! ",
+    "date": "2026-08-13",
+    "time": "17:30-21:30",
+    "location": "Peter Hall Russell Love Theatre",
     "enabled": true
   }
 ]

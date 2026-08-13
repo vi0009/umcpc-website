@@ -8,7 +8,9 @@ const Member = ({ name, title, img, text, profilePath }) => {
         <div className="relative w-40 xl:w-48 h-40 xl:h-48 rounded-full">
           <Image
             className="rounded-full"
-            src={img === '' ? '/profiles/tmp-profile.jpeg' : profilePath + img}
+            src={
+              img === '' ? profilePath + '/tmp-profile.jpeg' : profilePath + img
+            }
             alt="Committee member profile picture."
             layout="fill"
             objectFit="cover"

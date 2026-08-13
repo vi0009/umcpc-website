@@ -44,7 +44,7 @@ const Resources = () => {
   useEffect(() => {
     const loadResources = async () => {
       try {
-        const res = await fetch('/resources/resources.json')
+        const res = await fetch('/api/resources')
 
         if (!res.ok) {
           throw new Error('Failed to fetch resources')
