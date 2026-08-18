@@ -1,33 +1,55 @@
 import React, { useEffect, useState } from 'react'
-import { COMMITTEE, PROFILE_PATH } from '../../public/profiles/2026/profiles'
-import * as c2022 from '../../public/profiles/2022/profiles'
-import * as c2023 from '../../public/profiles/2023/profiles'
-import * as c2024 from '../../public/profiles/2024/profiles'
-import * as c2025 from '../../public/profiles/2025/profiles'
 import Member from './Member'
 
 const Committee = () => {
-  const past = [
-    { year: '2025', content: c2025 },
-    { year: '2024', content: c2024 },
-    { year: '2023', content: c2023 },
-    { year: '2022', content: c2022 },
-    
-  ]
+  const [current, setCurrent] = useState(null)
+  const [past, setPast] = useState([])
+
+  useEffect(() => {
+    const years = ['2025', '2024', '2023', '2022']
+    async function load() {
+      try {
+        const res = await fetch('/profiles/2026/profiles.json')
+        const data = await res.json()
+        setCurrent(data)
+
+        const pastData = await Promise.all(
+          years.map(async (y) => {
+            try {
+              const r = await fetch(`/profiles/${y}/profiles.json`)
+              if (!r.ok) return null
+              const j = await r.json()
+              return { year: y, content: j }
+            } catch (e) {
+              return null
+            }
+          })
+        )
+
+        setPast(pastData.filter(Boolean))
+      } catch (err) {
+        // keep component resilient on fetch errors
+        console.error('Failed to load profiles', err)
+      }
+    }
+
+    load()
+  }, [])
+
+  if (!current) return null
+
   return (
     <>
-      <Year profilePath={PROFILE_PATH} committee={COMMITTEE} />
-      {past.map(({ year, content: c }) => {1
+      <Year profilePath={current.PROFILE_PATH} committee={current.COMMITTEE} />
+      {past.map(({ year, content: c }) => {
         const { PROFILE_PATH, COMMITTEE } = c
         return (
-          <>
-            <div>
-              <h1 className="sticky top-0 z-50 page-header-font text-center pb-16">
-                {year} Committee
-              </h1>
-              <Year profilePath={PROFILE_PATH} committee={COMMITTEE} />
-            </div>
-          </>
+          <div key={year}>
+            <h1 className="sticky top-0 z-50 page-header-font text-center pb-16">
+              {year} Committee
+            </h1>
+            <Year profilePath={PROFILE_PATH} committee={COMMITTEE} />
+          </div>
         )
       })}
     </>

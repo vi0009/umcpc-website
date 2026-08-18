@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@leetnotion/leetcode-api": "^1.10.0",
-    "@notionhq/client": "^4.0.2",
+    "@notionhq/client": "^5.25.0",
     "@react-spring/three": "^9.4.2",
     "@react-three/drei": "^8.8.3",
     "@react-three/fiber": "^7.0.24",
