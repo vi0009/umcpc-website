@@ -1,22 +1,29 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 
-const useInView = (
-  opts = { threshold: 0.15, rootMargin: '0px 0px -15% 0px' }
-) => {
+const DEFAULT_IN_VIEW_OPTIONS = {
+  threshold: 0.15,
+  rootMargin: '0px 0px -15% 0px',
+}
+
+const useInView = (opts = DEFAULT_IN_VIEW_OPTIONS) => {
   const ref = useRef(null)
   const [inView, setInView] = useState(false)
+  const { threshold, rootMargin } = opts
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
 
-    const obs = new IntersectionObserver(([entry]) => {
-      setInView(entry.isIntersecting)
-    }, opts)
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        setInView(entry.isIntersecting)
+      },
+      { threshold, rootMargin }
+    )
 
     obs.observe(el)
     return () => obs.disconnect()
-  }, [opts.threshold, opts.rootMargin])
+  }, [rootMargin, threshold])
 
   return [ref, inView]
 }
@@ -38,7 +45,15 @@ export const FadeIn = ({ children, delay = 0 }) => {
   )
 }
 
-const img_types = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp', 'svg']
+const IMAGE_TYPES = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp', 'svg']
+
+const ADDITIONAL_THANKS = [
+  {
+    image: '/profiles/2024/richard.jpg',
+    alt: 'Richard (Treasurer 2024)',
+    message: 'Thank you Richard for the support to our club!',
+  },
+]
 
 const SponsorCard = ({ sponsor, delay = 0 }) => {
   const [logoSrc, setLogoSrc] = useState(null)
@@ -47,7 +62,7 @@ const SponsorCard = ({ sponsor, delay = 0 }) => {
     let mounted = true
 
     const findLogo = async () => {
-      for (const ext of img_types) {
+      for (const ext of IMAGE_TYPES) {
         const path = `/sponsors/logos/${sponsor.name}.${ext}`
         try {
           const res = await fetch(path, { method: 'HEAD' })
@@ -191,6 +206,32 @@ const Sponsors = () => {
           </div>
         </div>
       ))}
+
+      <FadeIn delay={80}>
+        <div className="mb-12">
+          <h2 className="text-white text-2xl font-bold mb-8">
+            Additional Thanks
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl">
+            {ADDITIONAL_THANKS.map((thanks) => (
+              <div
+                key={thanks.alt}
+                className="w-fit flex flex-col items-center gap-4 text-center"
+              >
+                <div className="w-44 h-44 p-1 border-2 border-club-blue-100 rounded-full">
+                  <img
+                    src={thanks.image}
+                    alt={thanks.alt}
+                    className="w-full h-full rounded-full object-cover object-[25%_center]"
+                  />
+                </div>
+                <p className="text-white/80">{thanks.message}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </FadeIn>
 
       <div className="pt-6 border-t border-white/10 text-center text-gray-400">
         Want to sponsor an event or workshop? Email{' '}
