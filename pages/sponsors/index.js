@@ -49,9 +49,10 @@ const IMAGE_TYPES = ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp', 'svg']
 
 const ADDITIONAL_THANKS = [
   {
-    image: '/profiles/2024/richard.jpg',
+    image: '/sponsors/logos/richard_profile.webp',
     alt: 'Richard (Treasurer 2024)',
-    message: 'Thank you Richard for the support to our club!',
+    name: 'Richard',
+    message: 'For boosting our discord server that one time.',
   },
 ]
 
@@ -226,7 +227,10 @@ const Sponsors = () => {
                     className="w-full h-full rounded-full object-cover object-[25%_center]"
                   />
                 </div>
-                <p className="text-white/80">{thanks.message}</p>
+                <div>
+                  <p className="text-white text-xl font-bold">{thanks.name}</p>
+                  <p className="text-white/80">{thanks.message}</p>
+                </div>
               </div>
             ))}
           </div>
