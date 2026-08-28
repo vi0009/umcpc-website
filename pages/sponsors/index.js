@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 const DEFAULT_IN_VIEW_OPTIONS = {
-  threshold: 0.15,
-  rootMargin: '0px 0px -15% 0px',
+  threshold: 0.1,
+  rootMargin: '0px 0px -5% 0px',
 }
 
 const useInView = (opts = DEFAULT_IN_VIEW_OPTIONS) => {
   const ref = useRef(null)
   const [inView, setInView] = useState(false)
+
   const { threshold, rootMargin } = opts
 
   useEffect(() => {
@@ -22,6 +23,7 @@ const useInView = (opts = DEFAULT_IN_VIEW_OPTIONS) => {
     )
 
     obs.observe(el)
+
     return () => obs.disconnect()
   }, [rootMargin, threshold])
 
@@ -32,15 +34,16 @@ export const FadeIn = ({ children, delay = 0 }) => {
   const [ref, inView] = useInView()
 
   return (
-    <div
-      ref={ref}
-      className={`
-        transition-all duration-500 ease-out
-        ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-      `}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
-      {children}
+    <div ref={ref}>
+      <div
+        className={`
+          transition-[opacity,transform] duration-500 ease-out
+          ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
+        `}
+        style={{ transitionDelay: `${delay}ms` }}
+      >
+        {children}
+      </div>
     </div>
   )
 }
