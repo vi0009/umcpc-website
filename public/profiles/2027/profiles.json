@@ -1,0 +1,80 @@
+{
+  "PROFILE_PATH": "/profiles/2027",
+  "COMMITTEE": {
+    "executives": [
+      {
+        "id": 1,
+        "name": "Honey Raut",
+        "title": "President",
+        "img": "/honey.webp",
+        "text": ""
+      },
+      {
+        "id": 2,
+        "name": "Sean Yin",
+        "title": "Vice President",
+        "img": "/sean.webp",
+        "text": ""
+      },
+      {
+        "id": 3,
+        "name": "Vincent Salim",
+        "title": "Treasurer",
+        "img": "/tmp-profile.jpeg",
+        "text": ""
+      },
+      {
+        "id": 4,
+        "name": "Ada Yuan",
+        "title": "Secretary",
+        "img": "/ada.jpg",
+        "text": ""
+      }
+    ],
+
+    "general": [
+      {
+        "id": 1,
+        "name": "Leo Ali",
+        "title": "Competitions Director",
+        "img": "/leo.webp",
+        "text": ""
+      },
+      {
+        "id": 2,
+        "name": "Henry Ho",
+        "title": "Education Director",
+        "img": "/henry.webp",
+        "text": ""
+      },
+      {
+        "id": 3,
+        "name": "Arsalan Mishani",
+        "title": "Marketing Director",
+        "img": "/arsalan.webp",
+        "text": ""
+      },
+      {
+        "id": 4,
+        "name": "Charlize Yuan",
+        "title": "Design Director",
+        "img": "/charlize.jpg",
+        "text": ""
+      },
+      {
+        "id": 5,
+        "name": "Timothy Chen",
+        "title": "P&C Director",
+        "img": "/timothy.webp",
+        "text": ""
+      },
+      {
+        "id": 6,
+        "name": "Victoria Yan",
+        "title": "IT Director",
+        "img": "/victoria.jpg",
+        "text": ""
+      }
+    ]
+  }
+}

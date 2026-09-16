@@ -6,10 +6,10 @@ const Committee = () => {
   const [past, setPast] = useState([])
 
   useEffect(() => {
-    const years = ['2025', '2024', '2023', '2022']
+    const years = ['2026', '2025', '2024', '2023', '2022']
     async function load() {
       try {
-        const res = await fetch('/profiles/2026/profiles.json')
+        const res = await fetch('/profiles/2027/profiles.json')
         const data = await res.json()
         setCurrent(data)
 
