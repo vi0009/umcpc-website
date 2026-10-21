@@ -32,37 +32,57 @@ const filterEvents = (events, upcoming = true) => {
   })
 }
 
-const EventCard = ({ event }) => (
-  <div className="relative w-full sm:w-[280px] flex-none h-56 sm:h-64 md:h-72 bg-club-blue-800 rounded-xl shadow-lg overflow-hidden group cursor-pointer transition-transform hover:scale-[1.02] hover:shadow-2xl border-2 border-club-blue-100">
-    {event.image && (
-      <img
-        src={event.image.startsWith('/') ? event.image : `/${event.image}`}
-        alt={event.name}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-      />
-    )}
+const EventCard = ({ event }) => {
+  const link = event.link?.trim()
+  const openLink = () => {
+    if (link) window.open(link, '_blank', 'noopener,noreferrer')
+  }
 
-    <div className="absolute bottom-0 w-full bg-club-blue-900/90 text-white text-center py-3 text-sm sm:text-base md:text-lg font-bold z-10">
-      {event.name}
-    </div>
+  return (
+    <div
+      onClick={openLink}
+      onKeyDown={(e) => {
+        if (link && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault()
+          openLink()
+        }
+      }}
+      role={link ? 'link' : undefined}
+      tabIndex={link ? 0 : undefined}
+      className={`relative w-full sm:w-[280px] flex-none h-56 sm:h-64 md:h-72 bg-club-blue-800 rounded-xl shadow-lg overflow-hidden group ${
+        link ? 'cursor-pointer' : ''
+      } transition-transform hover:scale-[1.02] hover:shadow-2xl border-2 border-club-blue-100`}
+    >
+      {event.image && (
+        <img
+          src={event.image.startsWith('/') ? event.image : `/${event.image}`}
+          alt={event.name}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+        />
+      )}
 
-    <div className="absolute inset-0 bg-club-blue-900/90 text-white p-4 sm:p-6 flex flex-col justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20">
-      <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">
+      <div className="absolute bottom-0 w-full bg-club-blue-900/90 text-white text-center py-3 text-sm sm:text-base md:text-lg font-bold z-10">
         {event.name}
-      </h2>
+      </div>
 
-      <p className="mb-3 text-xs sm:text-sm md:text-base">
-        {event.description}
-      </p>
+      <div className="absolute inset-0 bg-club-blue-900/90 text-white p-4 sm:p-6 flex flex-col justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">
+          {event.name}
+        </h2>
 
-      <div className="flex flex-col gap-1 text-xs sm:text-sm font-small">
-        <p>🗓️ {event.date ? new Date(event.date).toDateString() : 'TBA'}</p>
-        <p>⏰ {event.time || 'TBA'}</p>
-        <p>📍 {event.location || 'TBA'}</p>
+        <p className="mb-3 text-xs sm:text-sm md:text-base">
+          {event.description}
+        </p>
+
+        <div className="flex flex-col gap-1 text-xs sm:text-sm font-small">
+          <p>🗓️ {event.date ? new Date(event.date).toDateString() : 'TBA'}</p>
+          <p>⏰ {event.time || 'TBA'}</p>
+          <p>📍 {event.location || 'TBA'}</p>
+        </div>
       </div>
     </div>
-  </div>
-)
+  )
+}
 
 const Events = () => {
   const [events, setEvents] = useState([])

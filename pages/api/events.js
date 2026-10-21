@@ -118,9 +118,11 @@ export default async function handler(req, res) {
         Date: DateProp,
         Description,
         Link,
+        URL: UrlProp,
         Image,
         Time,
       } = page.properties
+      const linkProp = UrlProp || Link
 
       let imageUrl = '/events/images/default.jpeg'
       if (Image && Array.isArray(Image.files) && Image.files.length > 0) {
@@ -152,7 +154,10 @@ export default async function handler(req, res) {
         description:
           Description?.rich_text?.map((item) => item.plain_text).join('') || '',
 
-        link: Link?.url || null,
+        link:
+          linkProp?.url ||
+          linkProp?.rich_text?.map((t) => t.plain_text).join('') ||
+          null,
 
         image: imageUrl,
       }
