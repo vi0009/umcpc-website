@@ -34,24 +34,9 @@ const filterEvents = (events, upcoming = true) => {
 
 const EventCard = ({ event }) => {
   const link = event.link?.trim()
-  const openLink = () => {
-    if (link) window.open(link, '_blank', 'noopener,noreferrer')
-  }
-
   return (
     <div
-      onClick={openLink}
-      onKeyDown={(e) => {
-        if (link && (e.key === 'Enter' || e.key === ' ')) {
-          e.preventDefault()
-          openLink()
-        }
-      }}
-      role={link ? 'link' : undefined}
-      tabIndex={link ? 0 : undefined}
-      className={`relative w-full sm:w-[280px] flex-none h-56 sm:h-64 md:h-72 bg-club-blue-800 rounded-xl shadow-lg overflow-hidden group ${
-        link ? 'cursor-pointer' : ''
-      } transition-transform hover:scale-[1.02] hover:shadow-2xl border-2 border-club-blue-100`}
+      className={`relative w-full sm:w-[280px] flex-none h-56 sm:h-64 md:h-72 bg-club-blue-800 rounded-xl shadow-lg overflow-hidden group transition-transform hover:scale-[1.02] hover:shadow-2xl border-2 border-club-blue-100`}
     >
       {event.image && (
         <img
@@ -65,7 +50,11 @@ const EventCard = ({ event }) => {
         {event.name}
       </div>
 
-      <div className="absolute inset-0 bg-club-blue-900/90 text-white p-4 sm:p-6 flex flex-col justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20">
+      <div
+        className={`absolute inset-0 bg-club-blue-900/90 text-white p-4 sm:p-6 ${
+          link ? 'pb-14 sm:pb-14' : ''
+        } flex flex-col justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20`}
+      >
         <h2 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">
           {event.name}
         </h2>
@@ -79,6 +68,17 @@ const EventCard = ({ event }) => {
           <p>⏰ {event.time || 'TBA'}</p>
           <p>📍 {event.location || 'TBA'}</p>
         </div>
+
+        {link && (
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute bottom-3 left-1/2 -translate-x-1/2 px-6 py-1.5 rounded-full bg-white text-club-blue-900 text-sm font-bold shadow hover:bg-club-blue-100 transition-colors"
+          >
+            SIGN UP!!
+          </a>
+        )}
       </div>
     </div>
   )
