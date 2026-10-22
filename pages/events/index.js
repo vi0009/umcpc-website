@@ -74,7 +74,7 @@ const EventCard = ({ event }) => {
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="absolute bottom-3 left-1/2 -translate-x-1/2 px-6 py-1.5 rounded-full bg-white text-club-blue-900 text-sm font-bold shadow hover:bg-club-blue-100 transition-colors"
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 px-6 py-1.5 rounded-full bg-white text-club-blue-900 text-sm font-bold shadow hover:bg-club-blue-100 transition-colors"
           >
             SIGN UP!!
           </a>
